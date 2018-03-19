@@ -11,12 +11,17 @@
 Create a character!
 <div id="createCharacterContainer">
   Name:<input type="text" id="characterNameInput"></input><br>
+  Gender:<br>
+        <input type="radio" name="gender" value="Male" id="characterGenderInput">Male</input><br>
+        <input type="radio" name="gender" value="Female" id="characterGenderInput">Female</input><br>
+        <input type="radio" name="gender" value="Other" id="characterGenderInput">Other</input><br>
   Class:
-  <select>
+  <select id="characterClassInput">
     <option value="Warrior">Warrior</option>
     <option value="Mage">Mage</option>
     <option value="Rogue">Rogue</option>
-  </select>
+  </select><br>
+<button type="button" onclick="createCharacter()">Ok</button>
 </div>
 </body>
 <script src="scripts/game.js"></script>
