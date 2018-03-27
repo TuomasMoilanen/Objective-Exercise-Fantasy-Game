@@ -1,4 +1,10 @@
 
+function start(){                                                               // disabling the battle buttons
+  document.getElementById("playerAxeAttackButton").disabled = true;
+  document.getElementById("playerKnifeAttackButton").disabled = true;
+  document.getElementById("wolfTurnButton").disabled = true;
+}
+
 function Hero(name, gender, level, health, weapon) {                             //a proto for a player character
   this.name = name;
   this.gender = gender;
@@ -22,7 +28,7 @@ function Rogue(name, gender, level, health, weapon, ability){                   
   this.ability = ability;
 }
 
-function Monster(name, health, weapon){                                         //proto for regular monsters
+function Wolf(name, health, weapon){                                         //proto for regular wolves
   this.name = name;
   this.health = health;
   this.weapon = weapon;
@@ -41,28 +47,57 @@ Rogue.prototype = Object.create(Hero.prototype);
 
 //Add methods to existing prototypes.
 Hero.prototype.greet = function () {
-console.log(`${this.name} says hello.`);
+  console.log(`${this.name} says hello.`);
 }
 
-//Warriors can attack. When calling this function, one needs to define the object of the attack. => playerWarrior.attack(monster)
-Warrior.prototype.attack = function (target) {
-console.log(`${this.name} attacks ${target.name} with the ${this.weapon}.`);
-target.health = target.health - 10;
-console.log(`${target.name} has ${target.health} health left.`);
+Warrior.prototype.axeAttack = function (){
+  var target = enemyList[document.getElementById("playerTarget").value];
+  target.health -= 20;
+  console.log(`${this.name} attacks ${target.name} with an Axe! Dealing 20 damage! ${target.name}'s health is now ${target.health}.`);
+}
+Warrior.prototype.knifeAttack = function (){
+  var target = enemyList[document.getElementById("playerTarget").value];
+  target.health -= 15;
+  console.log(`${this.name} attacks ${target.name} with a Knife! Dealing 15 damage! ${target.name}'s health is now ${target.health}.`);
 }
 
-//Mages can heal. When calling this function, one needs to specify the target object => playerMage.heal(playerWarrior)
-Mage.prototype.spell = function (target) {
-  target.health = target.health + 15;
-  console.log(`${this.name} casts ${this.spell} on ${target.name}. ${target.name} has ${target.health} left.`);
-}
-
-//Create instances of different classes
-var playerCharacter;
-var wolf = new Monster('Wolf', 150, "Fangs");
+var enemyList = new Array();
+var charCreated = false;
+var playerCharacter;                                                            //declaring global character variables
+var wolfie = new Wolf('Wolfie', 150, "Fangs");
+enemyList.push(wolfie);
 var cultist = new Villain("Cultist", 100, "Dagger");
+enemyList.push(cultist);
 
+
+Wolf.prototype.attack = function (){                                             //Wolf attacks
+  function wolfWeapon(){
+    let randomWeapon = Math.floor(Math.random() * 2);
+    return randomWeapon;
+  }
+  var tempName = this.name;
+  var tempTargetName = playerCharacter.name;
+  switch (wolfWeapon()){
+    case 0:
+      fangsAttack(playerCharacter);
+      break;
+    case 1:
+      biteAttack(playerCharacter);
+      break;
+    default:
+      return;
+  }
+  function fangsAttack(playerCharacter){
+    playerCharacter.health -= 10;
+    console.log(`The ${tempName} attacks ${tempTargetName} with Fangs! Dealing 10 damage! ${tempTargetName} current health is ${playerCharacter.health}.`);
+  }
+  function biteAttack(playerCharacter){
+    playerCharacter.health -= 15;
+    console.log(`The ${tempName} attacks ${tempTargetName} with a Bite! Dealing 15 damage! ${tempTargetName} current health is ${playerCharacter.health}.`);
+  }
+}
 function createCharacter(){                                                     //starts the player character creation
+  charCreated = true;
   switch (document.getElementById("characterClassInput").value) {               //checks the player class
     case "Warrior":
       createWarrior();
@@ -77,29 +112,33 @@ function createCharacter(){                                                     
       return;
   }
   function createWarrior(){                                                     //creates a player warrior
-    playerCharacter =
-    new Warrior(document.getElementById("characterNameInput").value,
-    document.getElementById("characterGenderInput").value, 1, 100, "Axe",
-    "Block");
+    let nameInput = document.getElementById("characterNameInput").value;
+    let genderInput = document.getElementById("characterGenderInput").value;
+    playerCharacter = new Warrior(nameInput, genderInput, 1, 100, "Axe",
+      "Block");
   }
   function createMage(){                                                        //creates a player mage
-    playerCharacter =
-    new Mage(document.getElementById("characterNameInput").value,
-    document.getElementById("characterGenderInput").value, 1, 75, "Staff",
-    "Heal");
+    let nameInput = document.getElementById("characterNameInput").value;
+    let genderInput = document.getElementById("characterGenderInput").value;
+    playerCharacter = new Mage(nameInput, genderInput, 1, 75, "Staff", "Heal");
   }
   function createRogue(){                                                       //creates a player rogue
-    playerCharacter =
-    new Rogue(document.getElementById("characterNameInput").value,
-    document.getElementById("characterGenderInput").value, 1, 75, "Daggers",
-    "Backstab");
+    let nameInput = document.getElementById("characterNameInput").value;
+    let genderInput = document.getElementById("characterGenderInput").value;
+    playerCharacter = new Rogue(nameInput, genderInput, 1, 75, "Daggers",
+      "Backstab");
   }
 }
 
-//Testing the different methods
-function fight(){
-  playerWarrior.greet();
-  playerWarrior.attack(enemy);
-  playerMage.greet();
-  playerMage.heal(playerWarrior);
+var turnNumber = 0;                                                             //global battle variables
+
+function battle(){                                                              //a battle
+  if(charCreated === true){
+    document.getElementById("playerAxeAttackButton").disabled = false;
+    document.getElementById("playerKnifeAttackButton").disabled = false;
+    document.getElementById("wolfTurnButton").disabled = false;
+  }
+  else{
+    return;
+  }
 }
