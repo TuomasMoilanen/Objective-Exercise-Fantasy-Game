@@ -3,6 +3,13 @@ function start(){                                                               
   document.getElementById("playerAxeAttackButton").disabled = true;
   document.getElementById("playerKnifeAttackButton").disabled = true;
   document.getElementById("wolfTurnButton").disabled = true;
+  $(document).ready(function(){
+    $("#battleContainer").hide();
+    $("#battleButton").hide();
+    $("#battleButton").on("click", function(){
+      $("#battleContainer").show();
+    });
+  });
 }
 
 function Hero(name, gender, level, health, weapon) {                             //a proto for a player character
@@ -28,7 +35,7 @@ function Rogue(name, gender, level, health, weapon, ability){                   
   this.ability = ability;
 }
 
-function Wolf(name, health, weapon){                                         //proto for regular wolves
+function Wolf(name, health, weapon){                                            //proto for regular wolves
   this.name = name;
   this.health = health;
   this.weapon = weapon;
@@ -97,6 +104,10 @@ Wolf.prototype.attack = function (){                                            
   }
 }
 function createCharacter(){                                                     //starts the player character creation
+  var nameField = document.getElementById('characterNameInput').value;
+  if(nameField === null || nameField === ""){
+    return;
+  }
   charCreated = true;
   switch (document.getElementById("characterClassInput").value) {               //checks the player class
     case "Warrior":
@@ -128,6 +139,10 @@ function createCharacter(){                                                     
     playerCharacter = new Rogue(nameInput, genderInput, 1, 75, "Daggers",
       "Backstab");
   }
+  $(document).ready(function(){
+    $('#createCharacterContainer').hide();
+    $("#battleButton").show();
+  });
 }
 
 var turnNumber = 0;                                                             //global battle variables

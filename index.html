@@ -22,19 +22,22 @@
     <option value="Mage">Mage</option>
     <option value="Rogue">Rogue</option>
   </select><br>
-<button type="button" onclick="createCharacter()">Ok</button>
+<button type="button" id="createCharacterButton" onclick="createCharacter()">Ok</button>
 </div><br>
 <button type="button" id="battleButton" onclick="battle()">Do battle</button>
-<div id="playerAttackOptions">
-  Player attack options:<br>
-  Target:
-  <select id="playerTarget">
-    <option value="0">Wolf</option>
-    <option value="1">Cultist</option>
-  </select><br>
-  <button type="button" id="playerAxeAttackButton" onclick="playerCharacter.axeAttack()">Axe</button>
-  <button type="button" id="playerKnifeAttackButton" onclick="playerCharacter.knifeAttack()">Knife</button><br><br>
-  <button type="button" id="wolfTurnButton" onclick="wolfTurn()">Wolf's turn</button>
+<div id="battleContainer">
+  Before you stands an evil cultist with its pet wolf! They aim to fight you!
+  <p id="whosTurn">It is your turn!</p>
+  <p>Player attack options:<br>
+    Target:
+    <select id="playerTarget">
+      <option value="0">Wolf</option>
+      <option value="1">Cultist</option>
+    </select><br>
+    <button type="button" id="playerAxeAttackButton" onclick="playerCharacter.axeAttack()">Axe</button>
+    <button type="button" id="playerKnifeAttackButton" onclick="playerCharacter.knifeAttack()">Knife</button><br><br>
+    <button type="button" id="wolfTurnButton" onclick="wolfTurn()">Wolf's turn</button>
+  </p>
 </div>
 </body>
 <script src="scripts/game.js"></script>
