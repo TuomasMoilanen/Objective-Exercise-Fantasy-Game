@@ -9,6 +9,7 @@
   <title>A Game</title>
 </head>
 <body onload="start()">
+<div id="console"></div>
 <div id="createCharacterContainer">
   Create a character!<br>
   Name:<input type="text" id="characterNameInput"></input><br>
@@ -26,8 +27,6 @@
 </div><br>
 <button type="button" id="battleButton" onclick="battle()">Do battle</button>
 <div id="battleContainer">
-  Before you stands an evil cultist with its pet wolf! They aim to fight you!
-  <p id="whosTurn">It is your turn!</p>
   <p>Player attack options:<br>
     Target:
     <select id="playerTarget">
@@ -36,7 +35,8 @@
     </select><br>
     <button type="button" id="playerAxeAttackButton" onclick="playerCharacter.axeAttack()">Axe</button>
     <button type="button" id="playerKnifeAttackButton" onclick="playerCharacter.knifeAttack()">Knife</button><br><br>
-    <button type="button" id="wolfTurnButton" onclick="wolfTurn()">Wolf's turn</button>
+    <button type="button" id="wolfTurnButton" onclick="wolfie.attack()">Wolf's turn</button>
+    <button type="button" id="cultistTurnButton" onclick="cultist.attack()">Cultist's turn</button>
   </p>
 </div>
 </body>
